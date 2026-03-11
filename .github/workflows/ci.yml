@@ -4,6 +4,7 @@ on:
   push:
     branches: [ "main" ]
 
+
 jobs:
   compilar:
     runs-on: ubuntu-latest
@@ -24,20 +25,25 @@ jobs:
         
           
   probar:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     needs: compilar
-
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        java: [17, 21, 25]
+    
     steps:
       - name: Clonar repositorio
         uses: actions/checkout@v4
 
-      - name: Configurar JDK 21
+      - name: Configurar JDK ${{ matrix.java }}
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          java-version: ${{ matrix.java }}
           distribution: 'temurin'
           cache: 'maven'
 
       - name: Compilar y empaquetar
-        run: mvn clean test
-        
+        run: mvn clean package
+  
