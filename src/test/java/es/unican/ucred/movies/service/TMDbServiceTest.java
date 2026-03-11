@@ -46,7 +46,7 @@ class TMDbServiceTest {
         assertEquals(3, movies.size());
         
         Movie firstMovie = movies.get(0);
-        assertEquals(555, firstMovie.getId());
+        assertEquals(550, firstMovie.getId());
         assertEquals("El club de la lucha", firstMovie.getTitle());
         assertEquals("1999", firstMovie.getYear());
         assertEquals("8.4/10", firstMovie.getRatingString());
